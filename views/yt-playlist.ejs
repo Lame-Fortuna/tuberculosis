@@ -1,0 +1,59 @@
+<!DOCTYPE ejs>
+<html>
+    <head>
+        <title>YouTube Downloader</title>
+        <meta charset="UTF-8">
+        <link rel ="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+        <link rel ="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        <link rel="stylesheet" href="/css/yt.css">
+    </head>
+
+    <body>
+        <header>
+            <ul>
+                <li><a href="./" style="text-decoration: none;"><img class="logo" src="/logo2.png">Tubemate</a></li>
+                <li><a href="../audio/">Audio</a></li>
+                <li><a href="../video/">Video</a></li>
+                <li><a href="https://www.youtube.com/" target=”_blank”><img id="utube" src="youtube.png"></a></li>
+                <li style="flex-grow: 1; border:none"> </li>
+                <li><a href="" >Copyrights</a></li>
+            </ul>
+        </header>
+
+        <div class="cont">
+            <div class="warining" style="border: solid; background-color: palevioletred; color:darkblue; width: 100%; text-align: center;">
+                <p>Work in Progress</p>
+            </div>
+            <div class="opt-cont">
+                <div class="preview">
+                    <iframe width="622" height="350" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+
+                <div form action class="options">
+                    <div class="link">
+                        <label for="in">Link: </label>
+                        <input id="in" type="text">
+                        <button class="btn btn-info" type="submit"  style="font-size: 18px; margin-left: 5px;">Generate</button>                        
+                    </div>
+                
+                        <button>Quality</button>
+                        <select id="audio_bitrate" name="audio_bitrate" >
+                            <option value="320">High (720 kbps)</option>
+                            <option value="192">Medium (360 kbps)</option>
+                            <option value="32">Low (144 kbps)</option>
+                        </select>
+
+                        <label for "sub">Embed Subtitles</label>
+                        <input type="checkbox" id="sub"><br>
+                        <label for "sub">Embed Chapters</label>
+                        <input type="checkbox" id="chap"><br>
+
+                        <button class="btn" type="submit" onclick="" style="margin-top: 15px; font-size: 18px;">Download</button>
+            </div>
+            
+        </div>
+
+    </body>
+
+
+</html>

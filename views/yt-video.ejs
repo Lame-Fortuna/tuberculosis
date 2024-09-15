@@ -1,0 +1,144 @@
+<html>
+<head>
+    <title>YouTube Downloader</title>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel ="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel ="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="/css/yt.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <a href="/"><button><img class="logo" src="/logo2.png"><p class="hyde">TubeMate</p></button></a>
+        <a href="../audio/<%=vidId%>"><button>Audio</button></a>
+        <a href="/playlist" class="hyde"><button>Play List</button></a>
+        <a href="https://www.youtube.com/" target=”_blank”><button><img id="utube" src="/youtube.png"></button></a>
+        <button id='grow' class="hyde"></button>
+        <a href=""><button>Copyrights</button></a>
+    </div>
+
+    <div class="cont">
+        <div class="opt-cont">
+            
+            <div class="preview2">
+                <!-- Preview -->
+                <div class="panel panel-default" id="vid">
+                    <div class="panel-heading">Preview</div>
+                    <div class="panel-body" id="link">
+                        <iframe src="https://www.youtube-nocookie.com/embed/<%=vidId%>" id="pre2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <form id="form" class="options" action="../video/convert" method="post">
+                <!-- Redirection to new -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Generate New</div>
+                    <div class="panel-body">
+                        <div class="link">  
+                            <label for="in">Link: </label>
+                            <input id="in" type="text" name="link" value="https://www.youtube.com/watch?v=<%=vidId%>">
+                        </div>
+                        <button class="btn btn-info" id="b1" onclick="route(event)">Generate</button>        
+                    </div>                
+                </div>
+
+                <!-- Options -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">File Name</div>
+                    <div class="panel-body">
+                        <label for="fileName">File name: </label>
+                        <input type="text" id="fileName" name="fileName" value="<%=title%>" pattern="^[a-zA-Z0-9\()-_. ]*$" required><br>
+                        
+                        <label for "sub">Embed Subtitles</label>
+                        <input type="checkbox" id="opt1" onclick="update1()">
+                        <input type="hidden" id="sub" name="sub" value=""><br>
+                        
+                        <label for "sub">Embed Chapters</label>
+                        <input type="checkbox" id="opt2" onclick="update2()">
+                        <input type="hidden" id="chap" name="chap" value="">
+                    </div>
+                </div>
+
+                <!-- Quality -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Quality</div>
+                    <div class="panel-body" id="quality">
+                        <label for="audio_bitrate">Quality:</label>
+                        <select id="audio_bitrate" name="quality" >
+                            <option value="137">Highest (1080p)</option>
+                            <option value="136">High (720p)</option>
+                            <option value="135">Medium (480p)</option>
+                            <option value="134">Medium (360p)</option>
+                            <option value="133">Low (240p)</option>
+                            <option value="160">Lowest (144p)</option>
+                        </select>
+                        <button class="btn btn-info" id="b1" type="submit">Download</button>
+                    </div>
+                </div> 
+            
+            </form>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    function getVidId(url) {
+        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+        var match = url.match(regExp);
+        if (match && match[7].length == 11) {
+            return match[7];
+        }else 
+            alert('Invalid YouTube URL');
+            return -1
+    }
+    
+    function route(event){
+        event.preventDefault(); // Prevent the default form submission
+
+        const link = document.getElementById("in").value;
+
+        const vidId= getVidId(link);    
+
+        if(vidId!=-1){window.location.href = `/video/${vidId}`;}
+
+        return false;
+    }
+
+    // Optional Fields
+    function update1() {
+        var checkbox = document.getElementById('opt1');
+        var hiddenField = document.getElementById('sub');
+        
+        if (checkbox.checked) {
+            hiddenField.value = 1;
+        } else {
+            hiddenField.value = 0;
+        }
+    }
+    function update2() {
+        var checkbox = document.getElementById('opt2');
+        var hiddenField = document.getElementById('chap');
+        
+        if (checkbox.checked) {
+            hiddenField.value = 1;
+        } else {
+            hiddenField.value = 0;
+        }
+    }
+
+    document.getElementById('form').addEventListener('submit', function(event) {
+        const inputField = document.getElementById('fileName');
+        if (!inputField.checkValidity()) {
+            alert(inputField.title);
+            event.preventDefault();
+        }
+    });
+
+</script>
+
+</html>

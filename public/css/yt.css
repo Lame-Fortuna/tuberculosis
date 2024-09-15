@@ -1,0 +1,327 @@
+body{
+    background-image: (at top right, slategray, white);
+    margin: 0;
+}
+.box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+input{   
+    overflow: auto;
+}
+.header{
+    position: sticky;
+    top: 0;
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(161, 51, 51);
+    box-shadow: 2px 1.5px black;
+    border-radius: 0 0 15px 15px;
+    color: azure;
+    padding: 0 10px;
+}
+.logo{
+    height: 40px;
+    width: 40px;
+    margin-right: 5px;
+}
+.header button:hover{
+    background-color: maroon;
+} 
+.header button{
+    font-size: 17px;
+    background-color: inherit;
+    border: none;
+    color: azure;
+    height: 70px;
+    padding: 0 13px;
+    margin-right: 9px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+}
+.hyde{
+    display: none;
+    margin: 0;
+}
+#grow{
+    flex-grow: 1;
+    display: none;
+}
+#utube{
+    height: 35px;
+    padding: 0;
+}
+
+.container{    
+    display:flex;
+    height: fit-content;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    padding: 40px 0;
+}
+.container img{
+    max-width: 40%;      
+}
+.a{
+    display: flex;
+    margin: 15px;
+}
+.a #in{
+    color: white;
+    padding: 3px 10px;
+    border: solid;
+    width: 80%;
+    background-color: rgb(70, 68, 68);
+    border-radius: 35px 0 0 35px;
+    border: none;
+}
+.a select{
+    font-size: 20px;
+    border: none;
+}
+::placeholder{
+    opacity: 1;
+    padding: 5px ;
+    color: rgb(190, 185, 185);
+}
+#format{
+    color: aliceblue;
+    padding: 8px 12px;
+    margin-left: 1px;
+    background-color: rgb(31, 60, 71);
+    border-radius: 0 35px 35px 0;
+}
+#btn{
+    font-size: 20px;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 23px;
+    cursor: pointer;
+    background-color: lightskyblue;
+}
+
+footer{
+    color: white;
+    border: solid black;
+    background-color: rgb(70, 68, 68);
+    padding: 15px 15px;
+    font-size: 15px;
+}
+footer li{
+    padding: 2px 5px 0 0;
+}
+
+
+@media (min-width: 500px){
+    .hyde{
+        display: block;
+    }
+}
+/*644 x 600*/
+@media (min-width:700px) {
+    #grow:hover{
+        background-color: inherit;
+    }
+    #grow{
+        flex-grow: 1;
+        display: block;
+    }
+    #utube{  
+        margin: 0 10px;
+    }
+    .container{  
+        font-size: 33px;
+    }
+    .header button{
+        height: 100px;
+        font-size: 30px;
+        padding: 0 15px;
+        margin-right: 3px;
+    }
+    #btn{
+        font-size: 25px;
+        padding: 15px;
+        border-radius: 25px;
+    }
+    .a select{
+        font-size: 30px;
+    }
+    .a #in{
+        font-size: 35px;
+        padding: 12px;
+    }
+
+    footer{
+        font-size: 20px;
+    }
+}
+
+/*---- Part 2 ------------------------------------------------------------------------------------------------------------------------*/
+
+.cont{
+    margin: 10px 0;
+    height: fit-content;
+}
+
+.opt-cont{
+    font-size: 17px;
+    margin: auto;
+    width: 95%;
+    display: flex;
+    border: 2px solid;
+    border-radius: 4px;
+}
+
+.data{      
+    padding: 9px 40px;
+    width: 50%;
+    height: fit-content;
+    font-size: 19px;
+}
+#link{  
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+#meta-data{
+    display: none;
+}
+
+#meta-data input{
+    margin: 3px;
+}
+#collapsible{
+    width: 100%;
+    text-align: left;
+    border: none;
+}
+.active, #collapsible:hover {
+    background-color: #555;
+    color: white;
+  }
+  
+#collapsible:after {
+    content: '\002B';
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+#meta-data{
+    text-align: right;
+    width: fit-content;
+    margin-left: 5px;
+}
+label{
+    margin-right: 5px;
+    font-weight: 500;
+}
+.link #in{
+    width: 85%;
+}
+
+.preview{
+    width: 50%;
+    height: fit-content;
+}
+#vid{
+    margin-bottom: 20px;
+}
+#pre1{
+    width: 650px;
+    height: 350px;
+    max-width: 100%;
+}
+#quality{
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+}
+#b1{
+    text-align: center;
+    margin: 5px 10px; 
+    font-size: 20px;
+    text-align: center;
+}
+
+@media (max-width:1250px) {
+    .data, .preview{
+        padding: 15px;
+    }
+    .opt-cont label{
+        text-align: left;
+    }
+}
+
+@media (max-width:870px) {
+    .cont{
+        margin: 10px 0;
+    }
+    .opt-cont{
+        flex-direction: column;
+        width: 95%;
+    }
+    .data, .preview{
+        width: 90%;
+        margin: auto;
+    }
+    .data{
+        border-bottom: solid;
+    }
+}
+
+@media (max-width:640px) {
+    .data{
+        padding: 15px;
+    }
+}
+@media (max-width:450px) {
+    #meta-data{
+        font-size: 15px;
+    }
+}
+
+
+
+/*---- Part 3 ----------------------------------------------------------------------------------------------------------------------------------*/
+
+.options{
+    margin: auto;
+    width: 40%;
+    padding: 25px;
+}
+
+.preview2{
+    margin: auto;
+    width: 60%;
+    height: fit-content;
+    padding: 10px;
+}
+#pre2{
+    width: 880px;
+    height: 450px;
+}
+#main{
+    text-align: left;
+    margin-left: 30px;
+}
+
+@media (max-width:870px) {
+    .opt-cont{
+        flex-direction: column;
+        width: 95%;
+    }
+    .preview2, .options{
+        width: 90%;
+        margin: auto;
+    }
+    .options{
+        border-top: solid;
+    }
+}

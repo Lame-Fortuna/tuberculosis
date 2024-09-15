@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <title>YouTube Downloader</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico">
+        <meta charset="UTF-8">
+        <link rel ="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+        <link rel ="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        <link rel="stylesheet" href="/css/yt.css">
+    </head>
+
+    <body> 
+        <div class="box">
+            <div class="header">
+                <a href="/"><button><img class="logo" src="/logo2.png"><p class="hyde">TubeMate</p></button></a>
+                <a href="/playlist"><button>Play List</button></a>
+                <a href="https://www.youtube.com/" target=”_blank”><button><img id="utube" src="youtube.png"></button></a>
+                <button id='grow' class="hyde"></button>
+                <a href=""><button>Copyrights</button></a>
+            </div>
+    
+            <form class="container" onsubmit="route(event)">
+                <img src="/logo.png">
+                <div class="a">
+                    <input id="in" type="text" placeholder="Youtube Link...">
+                    <select id="format">
+                        <option value="1">Audio</option>
+                        <option value="2">Video</option>
+                    </select>
+                </div>
+                
+                <button id="btn" type="submit" style="margin-top: 9px;">Generate</button>
+            </form>
+            
+            <footer>
+                <p>To download YouTube videos, follow these steps:</p>
+                <ol>
+                    <li>Go to YouTube.com and find the video you want to download. Copy the video URL from the browser's address bar(eg. https://www.youtube.com/watch?v=aBKEt3MhNMM).</li>
+                    <li>Paste the video URL on this search bar and select your desired download format (MP3 or MP4). Then, click the "Generate" button.</li>
+                    <li>The video conversion will begin, and it may take some time. Please note that only YouTube videos with a maximum length of 3 hours can be downloaded. Once the conversion is complete, you can download the converted video.</li>
+                </ol>
+            </footer>
+        </div>
+    </body>
+
+    <script>
+        function getVidId(url) {
+            var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+            var match = url.match(regExp);
+            if (match && match[7].length == 11) {
+                return match[7];
+            }else 
+                alert('Invalid YouTube URL');
+                return -1
+        }
+        //https://www.youtube.com/watch?v=Dy4HA3vUv2c
+        function route(event){
+            event.preventDefault(); // Prevent the default form submission
+   
+            const link = document.getElementById("in").value;
+
+            const vidId= getVidId(link);    
+
+        //    const vidId = document.getElementById("in").value;
+            if(vidId !=-1){const format = document.getElementById("format").value;
+                if (format == 1){
+                    window.location.href = `/audio/${vidId}`;
+                }
+                if (format == 2){
+                    window.location.href = `/video/${vidId}`;
+                } }
+        }
+
+        function updateScreenWidth() {
+            const height = window.innerHeight;
+            const width = window.innerWidth; // Get the screen width
+            document.getElementById('screen-width').textContent = `Screen Width: ${width}px`;
+            document.getElementById('screen-height').textContent = `Screen Height: ${height}px`;
+        }
+
+        // Update the screen width on page load
+        window.onload = updateScreenWidth;
+
+        // Update the screen width on window resize
+        window.onresize = updateScreenWidth;
+        
+    </script>
+
+
+</html>

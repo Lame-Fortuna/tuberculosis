@@ -1,0 +1,159 @@
+<!DOCTYPE ejs>
+<html>
+<head>
+    <title>YouTube Downloader</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel ="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel ="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="/css/yt.css">
+</head>
+
+<body>
+    <div class="header">
+        <a href="/"><button><img class="logo" src="/logo2.png"><p class="hyde">TubeMate</p></button></a>
+        <a href="../video/<%=vidId%>"><button>Video</button></a>
+        <a href="/playlist" class="hyde"><button>Play List</button></a>
+        <a href="https://www.youtube.com/" target=”_blank”><button><img id="utube" src="/youtube.png"></button></a>
+        <button id='grow' class="hyde"></button>
+        <a href=""><button>Copyrights</button></a>
+    </div>
+    <div class="cont">
+        <form action="../audio/convert" method="post" class="opt-cont" id="form">
+
+            <div class="data">
+
+                <!-- Redirection to new -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Generate New</div>
+                    <div class="panel-body">
+                        <div class="link">  
+                            <label for="in">Link: </label>
+                            <input id="in" type="text" name="link" value="https://www.youtube.com/watch?v=<%=vidId%>">
+                        </div>
+                        <button class="btn btn-info" id="b1" onclick="route(event)">Generate</button>        
+                    </div>                
+                </div>
+
+                <!-- Name of the file -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">File Name</div>
+                    <div class="panel-body">
+                        <label for="fileName">File name: </label>
+                        <input type="text" id="fileName" name="fileName" value="<%=title%>" pattern="^[a-zA-Z0-9\()-_. ]*$" required>
+                    </div>
+                </div>
+
+                <!-- ID3 Data (Optional)-->
+                 <div class="panel panel-default">
+                    <button class="panel-heading" id="collapsible" onclick="show(event)">Edit ID3 Tags</button>
+                    <input id="id3" name="id3" style="display: none" value="0">
+                    <div id="meta-data">
+                        <label for="title">Title: </label>
+                        <input type="text" name="title" id="title" value="<%=title%>" onchange=""><br>
+                        <label for="artist">Artist: </label>
+                        <input type="text" name="artist" id="artist" value onchange=""><br>
+                        <label for="album">Album: </label>
+                        <input type="text" name="album" id="album" value onchange=""><br>
+                        <label for="year">Year: </label>
+                        <input type="number" name="year" id="year" maxlength="4" value onchange=""><br>
+                        <label for="comnt">Comment: </label>
+                        <input type="text"  name="cmnt" id="cmnt" onchange="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview">
+                <!-- Preview -->
+                <div class="panel panel-default" id="vid">
+                    <div class="panel-heading">Preview</div>
+                    <div class="panel-body">
+                        <iframe width="622" height="350" src="https://www.youtube-nocookie.com/embed/<%=vidId%>" id="pre1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+                
+                <!-- Quality -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Quality</div>
+                    <div class="panel-body" id="quality">
+                        <label for="audio_bitrate">Quality:</label>
+                        <select id="audio_bitrate" name="quality" >
+                            <option value="0">High</option>
+                            <option value="5">Medium</option>
+                            <option value="10">Low</option>
+                        </select>
+                        <button class="btn btn-info" id="b1" type="submit">Download</button>
+                    </div>
+                </div>              
+            </div>
+
+        </form>
+    </div>
+
+</body>
+
+<script>
+    var a=0;
+    function show(event){
+        event.preventDefault();
+        const id3= document.getElementById("id3");
+        const cont = document.getElementById("meta-data");
+        if( a==0 ){
+            cont.style.display="block";
+            a=1;
+            id3.value=1;
+            console.log("id3",1);
+        }
+        else{
+            cont.style.display="none";
+            a=0;
+            id3=0;
+        }
+        return false; // Needs to added to ensure the form is not submitted
+    }
+
+    function getVidId(url) {
+        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+        var match = url.match(regExp);
+        if (match && match[7].length == 11) {
+            return match[7];
+        }else 
+            alert('Invalid YouTube URL');
+            return -1
+    }
+
+    function route(event){
+        event.preventDefault(); // Prevent the default form submission
+
+        const link = document.getElementById("in").value;
+
+        const vidId= getVidId(link);    
+
+        if(vidId!=-1){window.location.href = `/audio/${vidId}`;}
+    }
+
+    document.getElementById('form').addEventListener('submit', function(event) {
+        const inputField = document.getElementById('fileName');
+        if (!inputField.checkValidity()) {
+            alert("Can't have that file name");
+            event.preventDefault();
+        }
+    });
+
+    function updateScreenWidth() {
+            const height = window.innerHeight;
+            const width = window.innerWidth; // Get the screen width
+            document.getElementById('screen-width').textContent = `Screen Width: ${width}px`;
+            document.getElementById('screen-height').textContent = `Screen Height: ${height}px`;
+        }
+
+        // Update the screen width on page load
+        window.onload = updateScreenWidth;
+
+        // Update the screen width on window resize
+        window.onresize = updateScreenWidth;
+</script>
+
+</html>

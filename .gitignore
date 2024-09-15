@@ -1,0 +1,16 @@
+node_modules
+
+id3.js
+
+package-lock.json
+
+wait.html
+
+yt-dlp --write-description --write-.txt
+
+.vscode
+
+Dockerfile
+
+.dockerignore
+
