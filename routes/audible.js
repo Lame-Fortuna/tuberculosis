@@ -48,7 +48,12 @@ router.get('/audio/', (req, res) => {
 
 router.get('/audio/:vidId', async (req, res) => {
     const vidId = req.params.vidId;
-    const videoUrl = `https://www.youtube.com/watch?v=${vidId}`;
+    const videoUrl = `https://www.youtube-nocookie.com/embed/${vidId}`;
+
+    /*Step 1: In place of vidID we will have site+com+vidid
+        2: We check if youtube if it is, embed site is https://www.youtube-nocookie.com/embed/<%=vidId%>
+        3: Else using yt-dlp -j, we find 'url' and embed that
+    */
 
     try {
         const title = await getVideoTitle(videoUrl);
@@ -60,6 +65,7 @@ router.get('/audio/:vidId', async (req, res) => {
     }
 });
 
+// Conversion
 router.post('/audio/convert', (req, res) => {
     const fileName = req.body.fileName;
     const link = req.body.link;

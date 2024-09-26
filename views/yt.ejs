@@ -69,19 +69,6 @@
                     window.location.href = `/video/${vidId}`;
                 } }
         }
-
-        function updateScreenWidth() {
-            const height = window.innerHeight;
-            const width = window.innerWidth; // Get the screen width
-            document.getElementById('screen-width').textContent = `Screen Width: ${width}px`;
-            document.getElementById('screen-height').textContent = `Screen Height: ${height}px`;
-        }
-
-        // Update the screen width on page load
-        window.onload = updateScreenWidth;
-
-        // Update the screen width on window resize
-        window.onresize = updateScreenWidth;
         
     </script>
 
