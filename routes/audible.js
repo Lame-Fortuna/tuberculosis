@@ -57,8 +57,9 @@ router.get('/audio/:vidId', async (req, res) => {
 
     try {
         const title = await getVideoTitle(videoUrl);
+        //const embedurl = await getEmbedURL(videoUrl)
         console.log("Title: ",title)
-        res.render("yt-audio", { vidId, title:title});
+        res.render("yt-audio", { vidId, title:title /*, embedURL*/});
     } catch (error) {
         console.error('Error rendering video details:', error);
         res.status(500).send('Error fetching video details');

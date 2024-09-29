@@ -12,7 +12,7 @@
 <body>
 
     <div class="header">
-        <a href="/"><button><img class="logo" src="/logo2.png"><p class="hyde">TubeMate</p></button></a>
+        <a href="/"><button><img class="logo" src="/logo2.png"><p class="hyde">ClipCatch</p></button></a>
         <a href="../audio/<%=vidId%>"><button>Audio</button></a>
         <a href="/playlist" class="hyde"><button>Play List</button></a>
         <a href="https://www.youtube.com/" target=”_blank”><button><img id="utube" src="/youtube.png"></button></a>
@@ -53,11 +53,11 @@
                         <label for="fileName">File name: </label>
                         <input type="text" id="fileName" name="fileName" value="<%=title%>" pattern="^[a-zA-Z0-9\()-_. ]*$" required><br>
                         
-                        <label for "sub">Embed Subtitles</label>
+                        <label for="opt1">Embed Subtitles</label>
                         <input type="checkbox" id="opt1" onclick="update1()">
                         <input type="hidden" id="sub" name="sub" value=""><br>
                         
-                        <label for "sub">Embed Chapters</label>
+                        <label for="opt2">Embed Chapters</label>
                         <input type="checkbox" id="opt2" onclick="update2()">
                         <input type="hidden" id="chap" name="chap" value="">
                     </div>

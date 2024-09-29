@@ -11,7 +11,7 @@
     <body> 
         <div class="box">
             <div class="header">
-                <a href="/"><button><img class="logo" src="/logo2.png"><p class="hyde">TubeMate</p></button></a>
+                <a href="/"><button><img class="logo" src="/logo2.png"><p class="hyde">ClipCatch</p></button></a>
                 <a href="/playlist"><button>Play List</button></a>
                 <a href="https://www.youtube.com/" target=”_blank”><button><img id="utube" src="youtube.png"></button></a>
                 <button id='grow' class="hyde"></button>
@@ -21,7 +21,7 @@
             <form class="container" onsubmit="route(event)">
                 <img src="/logo.png">
                 <div class="a">
-                    <input id="in" type="text" placeholder="Youtube Link...">
+                    <input id="in" type="text" placeholder="Link...">
                     <select id="format">
                         <option value="1">Audio</option>
                         <option value="2">Video</option>
@@ -43,15 +43,20 @@
     </body>
 
     <script>
+        /*
         function getVidId(url) {
-            var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+            var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;/*
             var match = url.match(regExp);
             if (match && match[7].length == 11) {
                 return match[7];
             }else 
                 alert('Invalid YouTube URL');
                 return -1
-        }
+        }*/
+
+        
+
+
         //https://www.youtube.com/watch?v=Dy4HA3vUv2c
         function route(event){
             event.preventDefault(); // Prevent the default form submission

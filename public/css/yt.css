@@ -17,7 +17,7 @@ input{
     display: flex; 
     align-items: center;
     justify-content: space-between;
-    background-color: rgb(161, 51, 51);
+    background-color: darkred;
     box-shadow: 2px 1.5px black;
     border-radius: 0 0 15px 15px;
     color: azure;
@@ -29,19 +29,19 @@ input{
     margin-right: 5px;
 }
 .header button:hover{
-    background-color: maroon;
+    background-color: rgb(79, 2, 2);
 } 
 .header button{
-    font-size: 17px;
+    font-size: 23px;
     background-color: inherit;
     border: none;
     color: azure;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     height: 70px;
     padding: 0 13px;
-    margin-right: 9px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    text-align: center;
+    margin-right: 9px;
     cursor: pointer;
 }
 .hyde{
@@ -66,7 +66,7 @@ input{
     padding: 40px 0;
 }
 .container img{
-    max-width: 40%;      
+    max-width: 300px;      
 }
 .a{
     display: flex;
@@ -122,6 +122,9 @@ footer li{
     .hyde{
         display: block;
     }
+    .container img{
+        max-width: 400px;      
+    }
 }
 /*644 x 600*/
 @media (min-width:700px) {
@@ -137,6 +140,9 @@ footer li{
     }
     .container{  
         font-size: 33px;
+    }
+    .container img{
+        max-width: 550px;      
     }
     .header button{
         height: 100px;
@@ -154,7 +160,7 @@ footer li{
     }
     .a #in{
         font-size: 35px;
-        padding: 12px;
+        padding: 8px 12px;
     }
 
     footer{
@@ -191,6 +197,9 @@ footer li{
 }
 #meta-data{
     display: none;
+    text-align: right;
+    width: fit-content;
+    margin-left: 5px;
 }
 
 #meta-data input{
@@ -213,11 +222,6 @@ footer li{
     margin-left: 5px;
 }
 
-#meta-data{
-    text-align: right;
-    width: fit-content;
-    margin-left: 5px;
-}
 label{
     margin-right: 5px;
     font-weight: 500;
@@ -227,11 +231,11 @@ label{
 }
 
 .preview{
+    padding: 3px 40px;
     width: 50%;
-    height: fit-content;
 }
-#vid{
-    margin-bottom: 20px;
+.preview .panel{
+    margin: 12px;
 }
 #pre1{
     width: 650px;
@@ -251,8 +255,11 @@ label{
 }
 
 @media (max-width:1250px) {
-    .data, .preview{
-        padding: 15px;
+    .data{
+        padding: 10px;
+    }
+    .preview{
+        padding: 0 10px;
     }
     .opt-cont label{
         text-align: left;
@@ -260,9 +267,6 @@ label{
 }
 
 @media (max-width:870px) {
-    .cont{
-        margin: 10px 0;
-    }
     .opt-cont{
         flex-direction: column;
         width: 95%;
