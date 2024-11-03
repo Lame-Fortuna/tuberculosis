@@ -13,13 +13,14 @@
 
 <body>
     <div class="header">
-        <a href="/"><button><img class="logo" src="/logo2.png"><p class="hyde">ClipCatch</p></button></a>
-        <a href="../video/<%=vidId%>"><button>Video</button></a>
+        <a href="/"><button><img class="logo" src="/logo3.png"><p class="hyde">ClipCatch</p></button></a>
+        <a href="<%= `../video/${btoa(vidUrl)}` %>"><button onclick="route(event, video)">Video</button></a>
         <a href="/playlist" class="hyde"><button>Play List</button></a>
         <a href="https://www.youtube.com/" target=”_blank”><button><img id="utube" src="/youtube.png"></button></a>
         <button id='grow' class="hyde"></button>
         <a href=""><button>Copyrights</button></a>
     </div>
+
     <div class="cont">
         <form action="../audio/convert" method="post" class="opt-cont" id="form">
 
@@ -31,9 +32,9 @@
                     <div class="panel-body">
                         <div class="link">  
                             <label for="in">Link: </label>
-                            <input id="in" type="text" name="link" value="https://www.youtube-nocookie.com/embed/<%=vidId%>">
+                            <input id="in" type="text" name="link" value="<%=vidUrl%>">
                         </div>
-                        <button class="btn btn-info" id="b1" onclick="route(event)">Generate</button>        
+                        <button class="btn btn-info" id="b1" onclick="route(event, audio)">Generate</button>        
                     </div>                
                 </div>
 
@@ -70,7 +71,7 @@
                 <div class="panel panel-default" id="vid">
                     <div class="panel-heading">Preview</div>
                     <div class="panel-body">
-                        <iframe width="622" height="350" src="https://www.youtube-nocookie.com/embed/<%=vidId%>" id="pre1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <iframe width="622" height="350" src="<%=embedURL%>" id="pre1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
                 </div>
                 
@@ -104,7 +105,6 @@
             cont.style.display="block";
             a=1;
             id3.value=1;
-            console.log("id3",1);
         }
         else{
             cont.style.display="none";
@@ -114,24 +114,31 @@
         return false; // Needs to added to ensure the form is not submitted
     }
 
-    function getVidId(url) {
-        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-        var match = url.match(regExp);
-        if (match && match[7].length == 11) {
-            return match[7];
-        }else 
-            alert('Invalid YouTube URL');
-            return -1
+    function getEncodedUrl(url) {
+        // Check if the URL is valid
+        try {
+            new URL(url); // This will throw an error if the URL is invalid
+        } catch (error) {
+            alert('Invalid URL');
+            return -1;
+        }
+
+        let encodedUrl = btoa(url);
+
+        // Make it URL-safe
+        encodedUrl = encodedUrl.replace(/\+/g, '-').replace(/%2F/g, '_').replace(/=+$/, '');
+
+        return encodedUrl;
     }
 
-    function route(event){
+    function route(event, format){
         event.preventDefault(); // Prevent the default form submission
 
         const link = document.getElementById("in").value;
 
-        const vidId= getVidId(link);    
+        const vidId= getEncodedUrl(link);    
 
-        if(vidId!=-1){window.location.href = `/audio/${vidId}`;}
+        if(vidId!=-1){window.location.href = `/${format}/${vidId}`;}
     }
 
     document.getElementById('form').addEventListener('submit', function(event) {
@@ -141,19 +148,6 @@
             event.preventDefault();
         }
     });
-
-    function updateScreenWidth() {
-            const height = window.innerHeight;
-            const width = window.innerWidth; // Get the screen width
-            document.getElementById('screen-width').textContent = `Screen Width: ${width}px`;
-            document.getElementById('screen-height').textContent = `Screen Height: ${height}px`;
-        }
-
-        // Update the screen width on page load
-        window.onload = updateScreenWidth;
-
-        // Update the screen width on window resize
-        window.onresize = updateScreenWidth;
 </script>
 
 </html>

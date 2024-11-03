@@ -7,21 +7,47 @@ const path = require('path');
 //const { promisify } = require('util');
 //const execPromise = promisify(exec);
 
+function checkyt(url){
+    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|v\/|.+\?.+v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})$/;
+    if (youtubeRegex.test(url)){
+        return true}
+    else{
+        false}
+}
 
 async function getVideoTitle(videoUrl) {
     // Module function
-    try {
-        /*const { stdout } = await exec(videoUrl, {dumpSingleJson: true,noWarnings: true});
+    let info = ['title', ''];
+    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|v\/|.+\?.+v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})$/;
+    
+    if (checkyt(videoUrl)) {
+        // Extract video ID from the URL
+        const match = videoUrl.match(youtubeRegex);
+        
+        const options = {
+            getTitle: true,
+            cookies: 'cook.txt',
+            userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        }
 
-        const videoInfo = JSON.parse(stdout); // Parsing the JSON output
-        return videoInfo.title; 
-        */
-        const { stdout } = await exec(videoUrl, {getTitle: true});
+        const { stdout } = await exec(videoUrl, options);
+        info[0] = stdout;  
 
-        return stdout; 
+        const vidId = match[5]; // The video ID is captured in the regex
+        info[1] = `https://www.youtube-nocookie.com/embed/${vidId}`;
+        return info
+    } else {
+        try {
+            const { stdout } = await exec(videoUrl, { dumpSingleJson: true, noWarnings: true });
+
+            const videoInfo = JSON.parse(stdout); // Parsing the JSON output
+            info[0] = videoInfo.title;
+            info[1] = videoInfo.url;
+            return info;
+
     } catch (error) {
         console.error('Error fetching YouTube title:', error);
-    }
+    }}
 
     // Application
     /*
@@ -39,19 +65,33 @@ async function getVideoTitle(videoUrl) {
     */
 }
 
+function decode(vidId){
+    let decodedVidId = vidId.replace(/-/g, '+').replace(/_/g, '/');
+    
+    // Add padding if necessary
+    const padding = decodedVidId.length % 4;
+    if (padding > 0) {
+        decodedVidId += '='.repeat(4 - padding);
+    }
+
+    return atob(decodedVidId);
+}
+
 // Pages
 router.get('/video/', (req, res) => {
-    res.render("yt-video", { vidId: "", title: "" });
+    res.render("yt-video", { vidUrl: "", title: "",embedURL: "" });
 });
 
 router.get('/video/:vidId', async (req, res) => {
     const vidId = req.params.vidId;
-    const videoUrl = `https://www.youtube.com/watch?v=${vidId}`;
+    const vidUrl = decode(vidId);
+    const info = await getVideoTitle(vidUrl);
 
     try {
-        const title = await getVideoTitle(videoUrl);
-        console.log("Title: ",title)
-        res.render("yt-video", { vidId, title: title || '' });
+        const title = info[0];
+        const embedURL = info[1]||'';
+        console.log("Title: ", title)
+        res.render("yt-video", { vidUrl, title, embedURL});
     } catch (error) {
         console.error('Error rendering video details:', error);
         res.status(500).send('Error fetching video details');
@@ -73,12 +113,22 @@ router.post('/video/convert', async (req, res) => {
     if(chap>0){ chap = true } else{chap = false}
 
     const options={
-        format: `${qual}+140`,
         embedThumbnail: true,
         output: outputPath,
         embedSubs  : sub,
-        embedChapters: chap,
-        cookies: 'cook.txt'
+        embedChapters: chap
+    };
+
+    if (checkyt(link)) {
+        const options={
+            format: `${qual}+140`,
+            embedThumbnail: true,
+            output: outputPath,
+            embedSubs  : sub,
+            embedChapters: chap,
+            cookies: 'cook.txt',
+            userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        };
     }
 
     exec(link, options)

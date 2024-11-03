@@ -1,5 +1,5 @@
 body{
-    background-image: (at top right, slategray, white);
+    background-image: conic-gradient(at top, rgba(128, 128, 128, 0.043), white);
     margin: 0;
 }
 .box{
@@ -23,9 +23,9 @@ input{
     color: azure;
     padding: 0 10px;
 }
-.logo{
-    height: 40px;
-    width: 40px;
+.header .logo{
+    height: 50px;
+    width: 50px;
     margin-right: 5px;
 }
 .header button:hover{
@@ -53,7 +53,7 @@ input{
     display: none;
 }
 #utube{
-    height: 35px;
+    height: 40px;
     padding: 0;
 }
 
@@ -66,7 +66,10 @@ input{
     padding: 40px 0;
 }
 .container img{
-    max-width: 300px;      
+    width: 300px;      
+}
+.container .logo{
+    width: 200px;
 }
 .a{
     display: flex;
@@ -122,9 +125,6 @@ footer li{
     .hyde{
         display: block;
     }
-    .container img{
-        max-width: 400px;      
-    }
 }
 /*644 x 600*/
 @media (min-width:700px) {
@@ -141,8 +141,8 @@ footer li{
     .container{  
         font-size: 33px;
     }
-    .container img{
-        max-width: 550px;      
+    .container img{ 
+        width: 400px;  
     }
     .header button{
         height: 100px;

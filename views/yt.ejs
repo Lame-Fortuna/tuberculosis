@@ -1,8 +1,9 @@
 <html>
     <head>
         <title>YouTube Downloader</title>
-        <link rel="icon" type="image/x-icon" href="/favicon.ico">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="UTF-8">
+        <link rel="icon" type="image/x-icon" href="/favicon.ico">
         <link rel ="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
         <link rel ="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
         <link rel="stylesheet" href="/css/yt.css">
@@ -11,7 +12,7 @@
     <body> 
         <div class="box">
             <div class="header">
-                <a href="/"><button><img class="logo" src="/logo2.png"><p class="hyde">ClipCatch</p></button></a>
+                <a href="/"><button><img class="logo" src="/logo3.png"><p class="hyde">ClipCatch</p></button></a>
                 <a href="/playlist"><button>Play List</button></a>
                 <a href="https://www.youtube.com/" target=”_blank”><button><img id="utube" src="youtube.png"></button></a>
                 <button id='grow' class="hyde"></button>
@@ -19,6 +20,7 @@
             </div>
     
             <form class="container" onsubmit="route(event)">
+                <img src="/logo2.png" class="logo">
                 <img src="/logo.png">
                 <div class="a">
                     <input id="in" type="text" placeholder="Link...">
@@ -31,10 +33,11 @@
                 <button id="btn" type="submit" style="margin-top: 9px;">Generate</button>
             </form>
             
+            
             <footer>
                 <p>To download YouTube videos, follow these steps:</p>
                 <ol>
-                    <li>Go to YouTube.com and find the video you want to download. Copy the video URL from the browser's address bar(eg. https://www.youtube.com/watch?v=aBKEt3MhNMM).</li>
+                    <li>Go to YouTube.com and find the video you want to download. Copy the video URL from the browser's address bar(eg. https://www.youtube.com/watch?v=aBKEt3MhNMM or https://www.dailymotion.com/video/x8dehdu).</li>
                     <li>Paste the video URL on this search bar and select your desired download format (MP3 or MP4). Then, click the "Generate" button.</li>
                     <li>The video conversion will begin, and it may take some time. Please note that only YouTube videos with a maximum length of 3 hours can be downloaded. Once the conversion is complete, you can download the converted video.</li>
                 </ol>
@@ -43,36 +46,40 @@
     </body>
 
     <script>
-        /*
-        function getVidId(url) {
-            var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;/*
-            var match = url.match(regExp);
-            if (match && match[7].length == 11) {
-                return match[7];
-            }else 
-                alert('Invalid YouTube URL');
-                return -1
-        }*/
 
-        
+        function getEncodedUrl(url) {
+            // Check if the URL is valid
+            try {
+                new URL(url); // This will throw an error if the URL is invalid
+            } catch (error) {
+                alert('Invalid URL');
+                return -1;
+            }
+
+            let encodedUrl = btoa(url);
+    
+            // Make it URL-safe
+            encodedUrl = encodedUrl.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
+            return encodedUrl;
+        }
 
 
         //https://www.youtube.com/watch?v=Dy4HA3vUv2c
-        function route(event){
+        function route(event) {
             event.preventDefault(); // Prevent the default form submission
-   
+
             const link = document.getElementById("in").value;
+            const encodedUrl = getEncodedUrl(link);
 
-            const vidId= getVidId(link);    
-
-        //    const vidId = document.getElementById("in").value;
-            if(vidId !=-1){const format = document.getElementById("format").value;
-                if (format == 1){
-                    window.location.href = `/audio/${vidId}`;
+            if (encodedUrl !== -1) {
+                const format = document.getElementById("format").value;
+                if (format == 1) {
+                    window.location.href = `/audio/${encodedUrl}`;
+                } else if (format == 2) {
+                    window.location.href = `/video/${encodedUrl}`;
                 }
-                if (format == 2){
-                    window.location.href = `/video/${vidId}`;
-                } }
+            }
         }
         
     </script>

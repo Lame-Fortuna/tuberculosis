@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>YouTube Downloader</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -12,8 +13,8 @@
 <body>
 
     <div class="header">
-        <a href="/"><button><img class="logo" src="/logo2.png"><p class="hyde">ClipCatch</p></button></a>
-        <a href="../audio/<%=vidId%>"><button>Audio</button></a>
+        <a href="/"><button><img class="logo" src="/logo3.png"><p class="hyde">ClipCatch</p></button></a>
+        <a href="<%= `../video/${btoa(vidUrl)}` %>"><button>Audio</button></a>
         <a href="/playlist" class="hyde"><button>Play List</button></a>
         <a href="https://www.youtube.com/" target=”_blank”><button><img id="utube" src="/youtube.png"></button></a>
         <button id='grow' class="hyde"></button>
@@ -28,7 +29,7 @@
                 <div class="panel panel-default" id="vid">
                     <div class="panel-heading">Preview</div>
                     <div class="panel-body" id="link">
-                        <iframe src="https://www.youtube-nocookie.com/embed/<%=vidId%>" id="pre2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                        <iframe src="<%=embedURL%>" id="pre2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe>
                     </div>
                 </div>
             </div>
@@ -40,7 +41,7 @@
                     <div class="panel-body">
                         <div class="link">  
                             <label for="in">Link: </label>
-                            <input id="in" type="text" name="link" value="https://www.youtube.com/watch?v=<%=vidId%>">
+                            <input id="in" type="text" name="link" value="<%=vidUrl%>">
                         </div>
                         <button class="btn btn-info" id="b1" onclick="route(event)">Generate</button>        
                     </div>                
